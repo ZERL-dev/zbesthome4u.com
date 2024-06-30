@@ -5,19 +5,18 @@ import AdminTabs from "../admin/components/tabs";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Admin Sold" },
-        { name: "description", content: "Welcome to Genet Design's and Alterations!" },
+        { title: "Admin Sale" },
+        { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };
 
-export default function AdminSold() {
+export default function AdminSale() {
 
     return (
         <>
-            <AdminTabs clothingType="old" />
+            <AdminTabs clothingType="ale" />
             <Outlet />
         </>
-    )
-}
-
+    );
+};

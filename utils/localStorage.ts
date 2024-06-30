@@ -1,5 +1,13 @@
 import { Clothing } from "./types";
 
+export const getLanguage = () => {
+    const languageString = localStorage.getItem("language");
+    return languageString ?
+        languageString === "amharic" ? "amharic" : "english"
+    : 
+        "english";
+};
+
 export const getWishlistItems = () => {
 
     const wishlistString = localStorage.getItem('wishlist');
