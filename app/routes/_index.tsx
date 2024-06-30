@@ -5,8 +5,8 @@ import Home from "../containers/home";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Home Page" },
-        { name: "description", content: "Welcome to Genet Design's and Alterations!" }, 
+        { title: "Home - Elias Realtor" },
+        { name: "description", content: "Welcome to Elias Realtor!" }, 
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };

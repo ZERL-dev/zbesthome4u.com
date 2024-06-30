@@ -2,12 +2,12 @@ import React from "react";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import getSaleClothingByID from "../../services/GET/getSaleClothingByID";
-import ClothingByID from "../containers/clothingByID";
+import Update from "../admin/containers/update";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "View Sale Clothing" },
-        { name: "description", content: "Welcome to Genet Design's and Alterations!" },
+        { title: "Admin Update Sale Clothing" },
+        { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };
@@ -17,13 +17,13 @@ export async function loader({ params }: LoaderFunctionArgs) {
     return res;
 };
 
-export default function SaleByIDPage() {
+export default function AdminSaleUpdate() {
 
     const saleClothingByID = useLoaderData<typeof loader>();
 
     return (
         <>
-            <ClothingByID clothing={saleClothingByID[0]} clothingType="sale" />
+            <Update clothing={saleClothingByID[0]} clothingType="sale" />
         </>
     );
 };

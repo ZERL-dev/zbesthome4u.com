@@ -3,7 +3,7 @@ import { useNavigate, useLocation, NavLink } from "@remix-run/react";
 import MobileMenu from "./mobileMenu";
 import WishlistModal from "../containers/wishlistModal";
 import { getWishlistItems } from "../../utils/localStorage";
-import headerLogo from "../../public/headerLogo.jpg";
+import logo from "../../public/logo.webp";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import { Clothing } from "../../utils/types";
@@ -110,7 +110,7 @@ export default function Header() {
         <div id="Header" onMouseLeave={closeClothingOptions}>
             <div id="HeaderContainer" className={ scrolled ? 'scrolled' : '' }>
                 <div id="HeaderLogoContainer">
-                    <NavLink to="/"><img id="HeaderLogo" src={headerLogo} alt="Genet Design's and Alterations Logo" /></NavLink>
+                    <NavLink to="/"><img id="HeaderLogo" src={logo} alt="Elias Realtor Logo" /></NavLink>
                 </div>
                 <div id="MobileHeaderMenuContainer">
                     <MobileMenu />

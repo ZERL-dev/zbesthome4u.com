@@ -23,7 +23,7 @@ export async function loader() {
 export const meta: MetaFunction = () => {
   return [
     { charset: 'utf-8' },
-    { title: 'New Remix App' },
+    { title: 'Elias Realtor' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ];
 };
