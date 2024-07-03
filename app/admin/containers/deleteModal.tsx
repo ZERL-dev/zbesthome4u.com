@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Button, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text } from '@chakra-ui/react'
-import deleteSaleClothingByID from "../../../services/DELETE/deleteSaleClothingByID";
-import deleteSoldClothingByID from "../../../services/DELETE/deleteSoldClothingByID";
+import { Modal, Button, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text } from "@chakra-ui/react";
+import deleteListingByID from "../../../services/DELETE/deleteListingByID";
 
 interface DeleteModalProps {
-    clothingType: string;
-    clothingID: string;
+    listingID: string;
     showModal: boolean;
     closeModal: () => void;
 };
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ clothingType, clothingID, showModal, closeModal }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ listingID, showModal, closeModal }) => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(showModal);
     const [deleting, setDeleting] = useState(false);
@@ -20,18 +18,13 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ clothingType, clothingID, sho
         closeModal();
     };
 
-    const deleteClothing = () => {
+    const deleteListing = () => {
 
-        if (clothingType === "sale") {
-            setDeleting(true);
-            deleteSaleClothingByID(clothingID);
-        } else if (clothingType === "sold") {
-            setDeleting(true);
-            deleteSoldClothingByID(clothingID);
-        };
+        setDeleting(true);
+        deleteListingByID(listingID);
 
         setTimeout(() => {
-            window.location.href = `/admin/${clothingType}/view`;
+            window.location.href = `/admin/listings/view`;
         }, 1000);
     };
 
@@ -46,7 +39,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ clothingType, clothingID, sho
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="blue" mr={3} onClick={closeDeleteModal}>Cancel</Button>
-                    <Button colorScheme="red" isLoading={deleting} onClick={deleteClothing}>Delete</Button>
+                    <Button colorScheme="red" isLoading={deleting} onClick={deleteListing}>Delete</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

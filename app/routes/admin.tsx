@@ -1,10 +1,10 @@
 import React from "react";
 import type { MetaFunction } from "@remix-run/node";
-import Auth from "../admin/auth/Auth";
+import Auth from "../admin/auth/auth";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Admin Portal" },
+        { title: "Admin Portal - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
@@ -13,8 +13,6 @@ export const meta: MetaFunction = () => {
 export default function AdminPage() {
     
     return (
-        <>
-            <Auth />
-        </>
+        <Auth />
     );
 };

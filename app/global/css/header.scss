@@ -1,0 +1,175 @@
+#Header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid black;
+    z-index: 3;
+
+    #HeaderContainer {
+        display: flex;
+        position: relative;
+        width: 95%;
+        height: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(5px);
+        transition: 0.5s;
+    }
+
+    #HeaderContainer.scrolled {
+        // width: 100%;
+        // padding: 0 2.5%;
+        backdrop-filter: blur(50px);
+    }
+
+    #HeaderLogoContainer {
+        display: flex;
+        position: relative;
+        width: 300px;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #HeaderLogoContainer a {
+        display: flex;
+        height: 100%;
+        align-items: center;
+    }
+
+    #HeaderLogo {
+        height: 100%;
+        user-select: none;
+    }
+
+    #HeaderListContainer {
+        display: flex;
+        position: relative;
+        width: 40%;
+        height: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #HeaderListBackground {
+        display: var(--itemBackground);
+        position: absolute;
+        top: var(--verticalPercentage);
+        left: var(--horizontalPercentage);
+        width: 20%;
+        height: 55%;
+        border-radius: 25px;
+        background-color: rgba(0, 0, 0, 0.75);
+        transition: 0.5s;
+        z-index: 2;
+    }
+
+    .HeaderListItem {
+        display: flex;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 550;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.5s;
+        z-index: 3;
+    }
+
+    .HeaderListItem:hover {
+        color: white;
+    }
+
+    #ListingDownArrow {
+        position: absolute;
+        bottom: 0;
+        color: black;
+        font-size: 20px;
+        transition: 0.5s;
+    }
+
+    #HeaderListingOptionsContainer {
+        display: flex;
+        position: absolute;
+        bottom: -12vh;
+        right: 15%;
+        width: 30%;
+        height: 12vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 550;
+        border: 1px solid black;
+        border-top: none;
+        border-radius: 0 0 25px 25px;
+        z-index: 2;
+        transition: 0.5s;
+    }
+
+    @keyframes slide-down {
+        from { transform: translateY(-12vh); opacity: 0; }
+        to { transform: transalateY(0vh); opacity: 1;}
+    }
+
+    #HeaderListingOptionsContainer.down {
+        animation: slide-down 0.5s ease-in-out;
+    }
+
+    @keyframes slide-up {
+        from { transform: translateY(0vh); opacity: 1; }
+        to { transform: translateY(-12vh); opacity: 0; }
+    }
+
+    #HeaderListingOptionsContainer.up {
+        animation: slide-up 0.5s ease-in-out;
+    }
+
+    #HeaderListingOptionsContainer div:first-child {
+        border-bottom: 1px solid black;
+    }
+
+    #HeaderListingOption {
+        display: flex;
+        position: relative;
+        width: 95%;
+        height: 50%;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+    }
+
+    #HeaderListingOptionLink {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+    }
+
+    #HeaderListingOptionLink:hover {
+        color: white;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #HeaderListContainer { display: none; }
+}
+
+@media (max-width: 600px) {
+    #HeaderLogoContainer { justify-content: flex-start; }
+}

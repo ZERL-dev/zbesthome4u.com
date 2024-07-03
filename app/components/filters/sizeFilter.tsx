@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Select } from '@chakra-ui/react';
-import filters from "../../utils/filters";
-import { Clothing } from "../../utils/types";
+import filters from "../../../utils/filters";
+import { Listing } from "../../../utils/types";
 
 interface SizeFilterProps {
-    currentOptions: Clothing[];
+    currentOptions: Listing[];
     sendSelectedFilter: (filter: string) => void;
 };
 

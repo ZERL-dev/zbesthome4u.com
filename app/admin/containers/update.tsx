@@ -1,36 +1,34 @@
 import React, { useState } from "react";
-import { Input, Text, Image, Button, FormControl, FormLabel, Select } from '@chakra-ui/react';
+import { Input, Text, Image, Button, FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { NavLink } from "@remix-run/react";
-import updateSaleClothingByID from "../../../services/PUT/updateSaleClothingByID";
-import updateSoldClothingByID from "../../../services/PUT/updateSoldClothingByID";
+import updateListingByID from "../../../services/PUT/updateListingByID";
 import cloudinaryUpload from "../../../services/POST/cloudinaryUpload";
 import { IoClose } from "react-icons/io5";
 import filters from "../../../utils/filters";
-import { Clothing } from "../../../utils/types";
+import { Listing } from "../../../utils/types";
 
 interface UpdateProps {
-    clothing: Clothing;
-    clothingType: string;
+    listing: Listing;
 };
 
-const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
+const Update: React.FC<UpdateProps> = ({ listing }) => {
 
     const { categories, categoryObj, sizes, sizeObj, genders, genderObj } = filters;
     const [showWarning, setShowWarning] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     // const [imageURLArray, setImageURLArray] = useState<string[]>([]);
-    const [thumbnail, setThumbnail] = useState(clothing.thumbnail);
-    const [updatedClothing, setUpdatedClothing] = useState<Clothing>({
-        id: clothing.id,
-        title: clothing.title,
-        price: clothing.price,
-        description: clothing.description,
-        category: clothing.category,
-        size: clothing.size,
-        gender: clothing.gender,
-        measurements: clothing.measurements,
-        notes: clothing.notes,
-        thumbnail: clothing.thumbnail,
+    const [thumbnail, setThumbnail] = useState(listing.thumbnail);
+    const [updatedListing, setUpdatedListing] = useState<Listing>({
+        id: listing.id,
+        title: listing.title,
+        price: listing.price,
+        description: listing.description,
+        category: listing.category,
+        size: listing.size,
+        gender: listing.gender,
+        measurements: listing.measurements,
+        notes: listing.notes,
+        thumbnail: listing.thumbnail,
         gallery: ["temp"]
     });
 
@@ -47,38 +45,28 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
         };
     };
 
-    const validateUpdatedClothing = (updatedClothing: Clothing) => {
+    const validateUpdatedListing = (updatedListing: Listing) => {
 
-        const clothing = {...updatedClothing, thumbnail: thumbnail};
+        const listing = {...updatedListing, thumbnail: thumbnail};
 
         if (
-                stringPattern.test(clothing.title) &&
-                stringPattern.test(clothing.description) &&
-                clothing.category in categoryObj &&
-                clothing.size in sizeObj &&
-                clothing.gender in genderObj &&
-                stringPattern.test(clothing.measurements) &&
-                stringPattern.test(clothing.thumbnail)
-                // stringPattern.test(clothing.gallery)
-            ) {
+            stringPattern.test(listing.title) &&
+            stringPattern.test(listing.description) &&
+            listing.category in categoryObj &&
+            listing.size in sizeObj &&
+            listing.gender in genderObj &&
+            stringPattern.test(listing.measurements) &&
+            stringPattern.test(listing.thumbnail) &&
+                stringPattern.test(String(listing.price)) &&
+            typeof listing.price === "number"
+            // stringPattern.test(listing.gallery)
+        ) {
 
-                if (
-                    clothingType === "sale" && 
-                    stringPattern.test(String(clothing.price)) &&
-                    typeof clothing.price === "number"
-                ) {
-                    setSubmitting(true);
-                    updateSaleClothingByID(clothing, String(clothing.id));
-                    setTimeout(() => {
-                        window.location.href = `/admin/sale/view`;
-                    }, 1000);
-                } else {
-                    setSubmitting(true);
-                    updateSoldClothingByID(clothing, String(clothing.id));
-                    setTimeout(() => {
-                        window.location.href = `/admin/sold/view`;;
-                    }, 1000);
-                };
+            setSubmitting(true);
+            updateListingByID(listing, String(listing.id));
+            setTimeout(() => {
+                window.location.href = `/admin/listings/view`;;
+            }, 1000);
                 
         } else {
             setShowWarning(true);
@@ -90,11 +78,11 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
 
     return (
         <div className="flex fixed top-0 left-[20vw] w-[80vw] h-screen justify-center items-center backdrop-blur-[50px] z-[2]">
-            <NavLink to={`/admin/${clothingType}/view`} className="flex fixed top-0 left-0 w-[65px] h-[65px] justify-end items-end text-[55px] z-[3]" unstable_viewTransition><IoClose /></NavLink>
+            <NavLink to={`/admin/listing/view`} className="flex fixed top-0 left-0 w-[65px] h-[65px] justify-end items-end text-[55px] z-[3]" unstable_viewTransition><IoClose /></NavLink>
             <div className="flex relative w-[50%] h-full pl-[5%] justify-start items-center">
                 {/* <input id="UploadGallery" type="file" accept="image/*" onChange={(file) => sendImage(file, "gallery")} />
                 {imageURLArray.map((image: string, index: number) => (
-                    <div id='GalleryImagePreview' key={index}>
+                    <div id="GalleryImagePreview" key={index}>
                         <Image src={image} alt="Gallery Image" />
                     </div>
                 ))} */}
@@ -109,21 +97,19 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
                 <div className="flex relative w-full h-[80%] pt-[5%] pr-[2%] flex-col justify-start items-start text-white">
                     <div className="flex relative w-full h-[98%] mb-[2%] pt-[2%] pr-[2%] flex-col justify-start items-start overflow-y-scroll">
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" value={updatedClothing.title} placeholder=" " onChange={(e) => setUpdatedClothing({...updatedClothing, title: e.target.value})} />
-                            <FormLabel>Clothing Title</FormLabel>
+                            <Input variant="flushed" value={updatedListing.title} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, title: e.target.value})} />
+                            <FormLabel>Listing Title</FormLabel>
                         </FormControl>
-                        {clothingType === "sale" && (
-                            <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                                <Input type="number" variant="flushed" value={updatedClothing.price} placeholder=" " onChange={(e) => setUpdatedClothing({...updatedClothing, price: Number(e.target.value)})} />
-                                <FormLabel>Clothing Price</FormLabel>
-                            </FormControl>
-                        )}
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" value={updatedClothing.description} placeholder=" " onChange={(e) => setUpdatedClothing({...updatedClothing, description: e.target.value})} />
+                            <Input type="number" variant="flushed" value={updatedListing.price} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, price: Number(e.target.value)})} />
+                            <FormLabel>Listing Price</FormLabel>
+                        </FormControl>
+                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
+                            <Input variant="flushed" value={updatedListing.description} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, description: e.target.value})} />
                             <FormLabel>Description</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={categoryObj[updatedClothing.category]} onChange={(e) => setUpdatedClothing({...updatedClothing, category: e.target.value})}>
+                            <Select defaultValue="" variant="flushed" placeholder={categoryObj[updatedListing.category]} onChange={(e) => setUpdatedListing({...updatedListing, category: e.target.value})}>
                                 <option value="" disabled></option> 
                                 {categories.map((category: string, index: number) => {
                                     const key = Object.keys(categoryObj).find(k => categoryObj[k] === category);
@@ -135,7 +121,7 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
                             <FormLabel>Category</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={sizeObj[updatedClothing.size]} onChange={(e) => setUpdatedClothing({...updatedClothing, size: e.target.value})}>
+                            <Select defaultValue="" variant="flushed" placeholder={sizeObj[updatedListing.size]} onChange={(e) => setUpdatedListing({...updatedListing, size: e.target.value})}>
                                 <option value="" disabled></option>
                                 {sizes.map((size: string, index: number) => {
                                     const key = Object.keys(sizeObj).find(k => sizeObj[k] === size);
@@ -147,7 +133,7 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
                             <FormLabel>Size</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={genderObj[updatedClothing.gender]} onChange={(e) => setUpdatedClothing({...updatedClothing, gender: e.target.value})}>
+                            <Select defaultValue="" variant="flushed" placeholder={genderObj[updatedListing.gender]} onChange={(e) => setUpdatedListing({...updatedListing, gender: e.target.value})}>
                                 <option value="" disabled></option>
                                 {genders.map((gender: string, index: number) => {
                                     const key = Object.keys(genderObj).find(k => genderObj[k] === gender);
@@ -159,15 +145,15 @@ const Update: React.FC<UpdateProps> = ({ clothing, clothingType }) => {
                             <FormLabel>Gender</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" value={updatedClothing.measurements} placeholder=" " onChange={(e) => setUpdatedClothing({...updatedClothing, measurements: e.target.value})} />
+                            <Input variant="flushed" value={updatedListing.measurements} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, measurements: e.target.value})} />
                             <FormLabel>Measurements</FormLabel>
                         </FormControl>
                         <FormControl variant="floating">
-                            <Input variant="flushed" value={updatedClothing.notes} placeholder=" " onChange={(e) => setUpdatedClothing({...updatedClothing, notes: e.target.value})} />
+                            <Input variant="flushed" value={updatedListing.notes} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, notes: e.target.value})} />
                             <FormLabel>Notes</FormLabel>
                         </FormControl>
                     </div>
-                    <Button isLoading={submitting} onClick={() => validateUpdatedClothing(updatedClothing)}>Update</Button>
+                    <Button isLoading={submitting} onClick={() => validateUpdatedListing(updatedListing)}>Update</Button>
                     {showWarning && 
                         <div className="flex absolute bottom-0 right-0 items-center text-red-600 text-2xl font-semibold">Invalid Information</div>
                     }

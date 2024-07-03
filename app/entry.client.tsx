@@ -7,26 +7,26 @@ import { ClientStyleContext } from './context'
 import createEmotionCache, { defaultCache } from './createEmotionCache'
 
 interface ClientCacheProviderProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 function ClientCacheProvider({ children }: ClientCacheProviderProps) {
-  const [cache, setCache] = useState(defaultCache)
+    const [cache, setCache] = useState(defaultCache)
 
-  function reset() {
-    setCache(createEmotionCache())
-  }
+    function reset() {
+        setCache(createEmotionCache())
+    }
 
-  return (
-    <ClientStyleContext.Provider value={{ reset }}>
-      <CacheProvider value={cache}>{children}</CacheProvider>
-    </ClientStyleContext.Provider>
-  )
+    return (
+        <ClientStyleContext.Provider value={{ reset }}>
+            <CacheProvider value={cache}>{children}</CacheProvider>
+        </ClientStyleContext.Provider>
+    )
 }
 
 hydrateRoot(
-  document,
-  <ClientCacheProvider>
-    <RemixBrowser />
-  </ClientCacheProvider> 
+    document,
+    <ClientCacheProvider>
+        <RemixBrowser />
+    </ClientCacheProvider> 
 )

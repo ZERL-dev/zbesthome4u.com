@@ -28,7 +28,7 @@ export interface Gender {
     U: string;
 };
 
-export interface Clothing {
+export interface Listing {
     id?: number;
     title: string;
     description: string;
@@ -40,8 +40,6 @@ export interface Clothing {
     notes?: string;
     thumbnail: string;
     gallery?: any;
-    saleClothes?: any;
-    soldClothes?: any;
 };
 
 export interface Filter {
