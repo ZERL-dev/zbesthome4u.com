@@ -10,7 +10,7 @@ export const getLanguage = () => {
 
 export const getWishlistItems = () => {
 
-    const wishlistString = localStorage.getItem('wishlist');
+    const wishlistString = localStorage.getItem("wishlist");
     const wishlist: Listing[] = wishlistString ? JSON.parse(wishlistString) : []; 
     return wishlist;
     
@@ -18,8 +18,8 @@ export const getWishlistItems = () => {
 
 export const checkInWishlist = (id: number | undefined) => {
 
-    if (typeof window !== 'undefined') {
-        const wishlistString = localStorage.getItem('wishlist');
+    if (typeof window !== "undefined") {
+        const wishlistString = localStorage.getItem("wishlist");
         const wishlist: Listing[] = wishlistString ? JSON.parse(wishlistString) : [];
 
         if (wishlist.length === 0) {

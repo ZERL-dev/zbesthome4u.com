@@ -6,7 +6,7 @@ export const meta: MetaFunction = () => {
     return [
         { title: "Admin Create Listing - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+        { name: "viewport", content: "width=device-width, initial-scale=1" }
     ];
 };
 

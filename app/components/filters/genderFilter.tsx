@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select } from '@chakra-ui/react';
+import { Select } from "@chakra-ui/react";
 import filters from "../../../utils/filters";
 import { Listing } from "../../../utils/types";
 

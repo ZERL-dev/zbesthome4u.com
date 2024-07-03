@@ -1,5 +1,5 @@
 import axios from "axios";
-import { env } from '../../utils/env';
+import { env } from "../../utils/env";
 import { Listing } from "../../utils/types";
 
 export default function createListing(data: Listing) {

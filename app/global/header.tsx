@@ -4,18 +4,14 @@ import MobileMenu from "./mobileMenu";
 import WishlistModal from "../containers/wishlistModal";
 import { getWishlistItems } from "../../utils/localStorage";
 import logo from "../../public/logo.webp";
-import { IoIosArrowDown } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import { Listing } from "../../utils/types";
 
 export default function Header() {
     
-    const [ListingOptionsView, setListingOptionsView] = useState(false);
-    const [ListingOptionsAnimation, setListingOptionsAnimation] = useState(false);
     const [itemBackground, setItemBackground] = useState("none");
     const [horizontalPercentage, setHorizontalPercentage] = useState("0%");
     const [verticalPercentage, setVerticalPercentage] = useState("0%");
-    const [downArrow, setDownArrow] = useState(false);
     const [wishlistModalOpen, setWishlistModalOpen] = useState(false);
     const [wishlistItems, setWishlistItems] = useState<Listing[]>([]);
     const [scrolled, setScrolled] = useState(false);
@@ -27,12 +23,12 @@ export default function Header() {
         const scrollToSection = (option: string) => {
             const section = document.getElementById(option);
             if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                section.scrollIntoView({ behavior: "smooth", block: "start" });
             };
         };
     
-        if (currentPath !== '/') {
-            navigate('/');
+        if (currentPath !== "/") {
+            navigate("/");
             setTimeout(() => {
                 scrollToSection(option);
             }, 1000);
@@ -42,37 +38,15 @@ export default function Header() {
     };
 
     const updateItemBackgroundPercentage = (percentage: string) => {
-            if (horizontalPercentage === "60%" && percentage !== "60%") {
-                closeListingOptions();
-            };
-            setItemBackground("flex");
-            setVerticalPercentage("22.5%");
-            setHorizontalPercentage(percentage);
+        setItemBackground("flex");
+        setVerticalPercentage("22.5%");
+        setHorizontalPercentage(percentage);
     };
 
     const hideItemBackground = () => {
         setItemBackground("none");
         setHorizontalPercentage("0%");
         setVerticalPercentage("-50%");
-    };
-
-    const openListingOptions = () => {
-        setListingOptionsView(true);
-        setListingOptionsAnimation(true);
-        updateItemBackgroundPercentage("60%");
-    };
-
-    const closeListingOptions = () => {
-        setListingOptionsAnimation(false);
-        setDownArrow(false);
-        setTimeout(() => {
-            setListingOptionsView(false);
-        }, 500);
-    };
-
-    const showDownArrow = () => {
-        updateItemBackgroundPercentage("60%");
-        setDownArrow(true);
     };
 
     const handleScroll = () => {
@@ -92,29 +66,29 @@ export default function Header() {
 
     useEffect(() => {
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
 
     }, []);
     
     return (
-        <div id="Header" onMouseLeave={closeListingOptions}>
-            <div id="HeaderContainer" className={ scrolled ? 'scrolled' : '' }>
+        <div id="Header">
+            <div id="HeaderContainer" className={ scrolled ? "scrolled" : "" }>
                 <div id="HeaderLogoContainer">
                     <NavLink to="/"><img id="HeaderLogo" src={logo} alt="Elias Realtor Logo" /></NavLink>
                 </div>
                 <div id="MobileHeaderMenuContainer">
                     <MobileMenu />
                 </div>
-                <ul id="HeaderListContainer" onMouseLeave={() => { hideItemBackground(); closeListingOptions(); }}>
+                <ul id="HeaderListContainer" onMouseLeave={hideItemBackground}>
                     <div id="HeaderListBackground"></div>
                     <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("0%")} onClick={() => redirect("Hero")}><p>Home</p></li>
                     <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("20%")} onClick={() => redirect("About")}><p>About</p></li>
                     <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("40%")} onClick={() => redirect("Contact")}><p>Contact</p></li>
-                    <li className="HeaderListItem" onMouseEnter={showDownArrow} onClick={openListingOptions}>
+                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("60%")}>
                         <a href="/listings">Listings</a>
                     </li>
                     <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("80%")} onClick={() => { setWishlistItems(getWishlistItems()); setWishlistModalOpen(true); }}>
