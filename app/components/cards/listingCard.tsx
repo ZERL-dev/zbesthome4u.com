@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { NavLink, unstable_useViewTransitionState, useLocation } from '@remix-run/react';
+import { NavLink, unstable_useViewTransitionState, useLocation } from "@remix-run/react";
 import { Card, CardBody, Image, Stack, Heading, Text, Button } from "@chakra-ui/react";
-import { addToWishlist, deleteFromWishlist } from "../../../utils/localStorage";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { addToWishlist, deleteFromWishlist } from "../../../utils/localStorage";
 import { Listing } from "../../../utils/types";
 
 interface ListingCardProps {
@@ -30,17 +30,17 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, inWishlist }) => {
                 <CardBody>
                     <Image
                         src={listing.thumbnail}
-                        alt='Listing Card Thumbnail'
+                        alt="Listing Card Thumbnail"
                         style={ isTransitioning && location.pathname === "/listings" ? { viewTransitionName: "listing-image" } : undefined }
                         className="rounded-[5px]"
                     />
-                    <Stack mt='6' spacing='3'>
-                        <Heading size='md'>{listing.title}</Heading>
-                        <Text fontSize='lg'>${listing.price}</Text>
+                    <Stack mt="6" spacing="3">
+                        <Heading size="md">{listing.title}</Heading>
+                        <Text fontSize="lg">${listing.price}</Text>
                     </Stack>
                 </CardBody>
             </NavLink>
-            <Button variant='ghost' onClick={updateWishlistState} className="ml-[10px] mb-[10px]">
+            <Button variant="ghost" onClick={updateWishlistState} className="ml-[10px] mb-[10px]">
                 {wishlist ? (
                     <FaHeart className="text-red-600" /> 
                 ) : (

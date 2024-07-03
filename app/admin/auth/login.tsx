@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Heading, Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import checkCredentials from "../../../services/GET/checkCredentials";
+import "./css/login.scss";
 
 interface LoginProps {
     updateLoginState: (username: string, password: string) => void;
