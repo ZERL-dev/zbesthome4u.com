@@ -1,29 +1,28 @@
 import React from "react";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import getSaleClothingByID from "../../services/GET/getSaleClothingByID";
+import getListingByID from "../../services/GET/getListingByID";
 import Update from "../admin/containers/update";
+import { Listing } from "utils/types";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Admin Update Sale Clothing" },
+        { title: "Admin Update Listing - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {
-    const res: any = await getSaleClothingByID(String(params.id));
+    const res: Listing[] = await getListingByID(String(params.id));
     return res;
 };
 
-export default function AdminSaleUpdate() {
+export default function AdminListingUpdatePage() {
 
-    const saleClothingByID = useLoaderData<typeof loader>();
+    const listingByID = useLoaderData<typeof loader>();
 
     return (
-        <>
-            <Update clothing={saleClothingByID[0]} clothingType="sale" />
-        </>
+        <Update listing={listingByID[0]} />
     );
 };

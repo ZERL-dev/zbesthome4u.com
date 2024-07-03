@@ -5,17 +5,17 @@ import AdminTabs from "../admin/components/tabs";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Admin Sale" },
+        { title: "Admin Listings - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };
 
-export default function AdminSale() {
+export default function AdminListingsPage() {
 
     return (
         <>
-            <AdminTabs clothingType="ale" />
+            <AdminTabs />
             <Outlet />
         </>
     );

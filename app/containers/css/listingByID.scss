@@ -1,0 +1,139 @@
+#ListingByID {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 10vh;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(50px);
+    z-index: 2;
+}
+
+#ListingByIDContainer {
+    display: fixed;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#ListingByIDCloseButton {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 70px;
+    z-index: 3;
+}
+
+#IndividualListing {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#IndividualListingContainer {
+    display: flex;
+    position: relative;
+    width: 95%;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#IndividualListingLeftContainer {
+    display: flex;
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding-left: 5%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#IndividualListingThumbnail {
+    height: 90%;
+    object-fit: contain;
+}
+
+#IndividualListingRightContainer {
+    display: flex;
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding-right: 7.5%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#IndividualListingStack {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    padding-right: 2%; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: white;
+    overflow-y: scroll;
+}
+
+#IndividualListingStackBackground {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 25px;
+    z-index: 0;
+}
+
+@media (max-width: 1250px) {
+
+    #IndividualListingThumbnail {
+        height: auto;
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    #ListingByIDCloseButton {
+        display: none;
+    }
+
+    #IndividualListingContainer {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    #IndividualListingLeftContainer {
+        width: 100%;
+        margin-top: 10%;
+        padding-left: 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #IndividualListingRightContainer {
+        width: 90%;
+        padding-right: 0;
+    }
+
+    #IndividualListingStack {
+        padding: 0 5%;
+    }
+
+}

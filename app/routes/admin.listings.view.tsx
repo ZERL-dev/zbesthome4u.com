@@ -1,30 +1,30 @@
 import React from "react";
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
-import getAllSaleClothes from "../../services/GET/getAllSaleClothes";
+import getAllListings from "../../services/GET/getAllListings";
 import View from "../admin/containers/view";
-import { Clothing } from "../../utils/types";
+import { Listing } from "../../utils/types";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Admin View Sale Clothing" },
+        { title: "Admin View Listings - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ];
 };
 
 export async function loader() {
-    const res: any = await getAllSaleClothes();
+    const res: Listing[] = await getAllListings();
     return res.reverse();
 };
 
-export default function AllSalePage() {
+export default function AllListingsPage() {
 
-    const allSaleClothes = useLoaderData<typeof loader>();
+    const allListings = useLoaderData<typeof loader>();
     
     return (
         <>
-            <View clothes={allSaleClothes} clothingType="sale" />
+            <View listings={allListings} />
             <Outlet />
         </>
     );

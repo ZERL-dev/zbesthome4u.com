@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Select } from '@chakra-ui/react';
-import filters from "../../utils/filters";
-import { Clothing } from "../../utils/types";
+import { Select } from "@chakra-ui/react";
+import filters from "../../../utils/filters";
+import { Listing } from "../../../utils/types";
 
 interface CategoryFilterProps {
-    currentOptions: Clothing[];
+    currentOptions: Listing[];
     sendSelectedFilter: (filter: string) => void;
 };
 
@@ -42,7 +42,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ currentOptions, sendSel
     return (
         <>
             <Select borderColor="pink" defaultValue="" onChange={(e) => sendSelectedFilter(e.target.value)}>
-                <option value="" disabled>Clothing Type Filter</option>
+                <option value="" disabled>Listing Type Filter</option>
                 {categories.map((category: string, index: number) => {
 
                     const key = Object.keys(categoryObj).find(k => categoryObj[k] === category);

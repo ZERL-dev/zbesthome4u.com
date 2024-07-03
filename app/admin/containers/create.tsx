@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Input, Text, Image, Button, FormControl, FormLabel, Select } from '@chakra-ui/react';
-import createSaleClothing from "../../../services/POST/createSaleClothing";
-import createSoldClothing from "../../../services/POST/createSoldClothing";
+import { Input, Image, Button, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import createListing from "../../../services/POST/createListing";
 import cloudinaryUpload from "../../../services/POST/cloudinaryUpload";
 import filters from "../../../utils/filters";
-import { Clothing } from "../../../utils/types";
+import { Listing } from "../../../utils/types";
 
-const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
+export default function Create() {
     
     const { categories, categoryObj, sizes, sizeObj, genders, genderObj } = filters;
     const [showWarning, setShowWarning] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     // const [imageURLArray, setImageURLArray] = useState<string[]>([]);
     const [thumbnail, setThumbnail] = useState("");
-    const [newClothing, setNewClothing] = useState<Clothing>({
+    const [newListing, setNewListing] = useState<Listing>({
         title: "",
         price: undefined,
         description: "",
@@ -39,38 +38,28 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
         };
     };
 
-    const validateNewClothing = (newClothing: Clothing) => {
+    const validateNewListing = (newListing: Listing) => {
         
-        const clothing = {...newClothing, thumbnail: thumbnail};
+        const listing = {...newListing, thumbnail: thumbnail};
 
         if (
-                stringPattern.test(clothing.title) &&
-                stringPattern.test(clothing.description) &&
-                clothing.category in categoryObj &&
-                clothing.size in sizeObj &&
-                clothing.gender in genderObj &&
-                stringPattern.test(clothing.measurements) &&
-                stringPattern.test(clothing.thumbnail)
-                // stringPattern.test(clothing.gallery)
-            ) {
+            stringPattern.test(listing.title) &&
+            stringPattern.test(listing.description) &&
+            listing.category in categoryObj &&
+            listing.size in sizeObj &&
+            listing.gender in genderObj &&
+            stringPattern.test(listing.measurements) &&
+            stringPattern.test(listing.thumbnail) &&
+            stringPattern.test(String(listing.price)) &&
+            typeof listing.price === "number"
+            // stringPattern.test(listing.gallery)
+        ) {
 
-                if (
-                    clothingType === "sale" && 
-                    stringPattern.test(String(clothing.price)) &&
-                    typeof clothing.price === "number"
-                ) {
-                    setSubmitting(true);
-                    createSaleClothing(clothing);
-                    setTimeout(() => {
-                        window.location.href = `/admin/sale/view`;
-                    }, 1000);
-                } else {
-                    setSubmitting(true);
-                    createSoldClothing(clothing);
-                    setTimeout(() => {
-                        window.location.href = `/admin/sold/view`;;
-                    }, 1000);
-                };
+            setSubmitting(true);
+            createListing(listing);
+            setTimeout(() => {
+                window.location.href = `/admin/listing/view`;
+            }, 1000);
                 
         } else {
             setShowWarning(true);
@@ -85,7 +74,7 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
             <div className="flex relative w-[50%] h-full pl-[5%] justify-start items-center">
                 {/* <input id="UploadGallery" type="file" accept="image/*" onChange={(file) => sendImage(file, "gallery")} />
                 {imageURLArray.map((image: string, index: number) => (
-                    <div id='GalleryImagePreview' key={index}>
+                    <div id="GalleryImagePreview" key={index}>
                         <Image src={image} alt="Gallery Image" />
                     </div>
                 ))} */}
@@ -100,21 +89,19 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
                 <div className="flex relative w-full h-[80%] pt-[5%] pr-[2%] flex-col justify-start items-start text-white">
                     <div className="flex relative w-full h-[98%] mb-[2%] pt-[2%] pr-[2%] flex-col justify-start items-start overflow-y-scroll">
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, title: e.target.value})} />
-                            <FormLabel>Clothing Title</FormLabel>
+                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, title: e.target.value})} />
+                            <FormLabel>Listing Title</FormLabel>
                         </FormControl>
-                        {clothingType === "sale" && (
-                            <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                                <Input type="number" variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, price: Number(e.target.value)})} />
-                                <FormLabel>Clothing Price</FormLabel>
-                            </FormControl>
-                        )}
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, description: e.target.value})} />
+                            <Input type="number" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, price: Number(e.target.value)})} />
+                            <FormLabel>Listing Price</FormLabel>
+                        </FormControl>
+                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
+                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, description: e.target.value})} />
                             <FormLabel>Description</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, category: e.target.value})}> 
+                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, category: e.target.value})}> 
                                 <option value="" disabled></option>
                                 {categories.map((category: string, index: number) => {
                                     const key = Object.keys(categoryObj).find(k => categoryObj[k] === category);
@@ -126,7 +113,7 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
                             <FormLabel>Category</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, size: e.target.value})}> 
+                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, size: e.target.value})}> 
                                 <option value="" disabled></option>
                                 {sizes.map((size: string, index: number) => {
                                     const key = Object.keys(sizeObj).find(k => sizeObj[k] === size);
@@ -138,7 +125,7 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
                             <FormLabel>Size</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, gender: e.target.value})}>
+                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, gender: e.target.value})}>
                                 <option value="" disabled></option>
                                 {genders.map((gender: string, index: number) => {
                                     const key = Object.keys(genderObj).find(k => genderObj[k] === gender);
@@ -150,15 +137,15 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
                             <FormLabel>Gender</FormLabel>
                         </FormControl>
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, measurements: e.target.value})} />
+                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, measurements: e.target.value})} />
                             <FormLabel>Measurements</FormLabel>
                         </FormControl>
                         <FormControl variant="floating">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewClothing({...newClothing, notes: e.target.value})} />
+                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, notes: e.target.value})} />
                             <FormLabel>Notes</FormLabel>
                         </FormControl>
                     </div>
-                    <Button isLoading={submitting} onClick={() => validateNewClothing(newClothing)}>Create</Button>
+                    <Button isLoading={submitting} onClick={() => validateNewListing(newListing)}>Create</Button>
                     {showWarning && 
                         <div className="flex absolute bottom-0 right-0 h-[40px] items-center text-red-600 text-2xl font-semibold">Invalid Information</div>
                     }
@@ -167,5 +154,3 @@ const Create: React.FC<{ clothingType: string }> = ({ clothingType }) => {
         </div>
     );
 };
-
-export default Create;

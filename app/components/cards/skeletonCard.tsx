@@ -1,6 +1,6 @@
 import React from "react";
 import { SkeletonText, Card, CardBody, Image, Stack, Button } from "@chakra-ui/react";
-import skeletonImage from "../../public/skeletonImage.gif";
+import skeletonImage from "../../../public/skeletonImage.gif";
 import { FaRegHeart } from "react-icons/fa";
 
 export default function SkeletonCard() {
@@ -11,14 +11,14 @@ export default function SkeletonCard() {
                 <CardBody>
                     <Image
                         src={skeletonImage}
-                        alt='Image of Clothing'
-                        borderRadius='lg'
+                        alt="Image of Listing"
+                        borderRadius="lg"
                     />
-                    <Stack mt='6' spacing='3'>
+                    <Stack mt="6" spacing="3">
                         <SkeletonText />
                     </Stack>
                 </CardBody>
-                <Button variant='ghost' className="ml-[10px] mb-[10px]">
+                <Button variant="ghost" className="ml-[10px] mb-[10px]">
                     <FaRegHeart />
                 </Button>
             </Card>

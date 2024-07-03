@@ -1,15 +1,15 @@
 const categories = [
-    "Clothing, Top",
-    "Clothing, Bottom", 
-    "Clothing, Other",
+    "Listing, Top",
+    "Listing, Bottom", 
+    "Listing, Other",
     "Accessories",
     "Other"
 ];
 
 const categoryObj: { [key: string]: string; } = {
-    CT: "Clothing, Top",
-    CB: "Clothing, Bottom", 
-    CO: "Clothing, Other",
+    CT: "Listing, Top",
+    CB: "Listing, Bottom", 
+    CO: "Listing, Other",
     A: "Accessories",
     O: "Other"
 };
