@@ -1,49 +1,18 @@
 export interface Admin {
-    name: string;
+    username: string;
     password: string;
-};
-
-export interface Category {
-    CT: string;
-    CB: string;
-    CO: string;
-    A: string;
-    O: string;
-};
-
-export interface Size {
-    XXS: string;
-    XS: string;
-    S: string;
-    M: string;
-    L: string;
-    XL: string;
-    XXL: string;
-    OS: string;
-};
-
-export interface Gender {
-    M: string;
-    F: string;
-    U: string;
 };
 
 export interface Listing {
     id?: number;
     title: string;
-    description: string;
-    category: string;
-    size: string;
-    measurements: string;
-    gender: string;
-    price?: number;
-    notes?: string;
+    price: number;
+    perks?: string;
+    address: string;
+    description?: string;
+    application_link?: string;
+    date: string;
     thumbnail: string;
-    gallery?: any;
-};
-
-export interface Filter {
-    category: string;
-    size: string;
-    gender: string;
+    gallery?: string[];
+    // hidden: boolean;
 };

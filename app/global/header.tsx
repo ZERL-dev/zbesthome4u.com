@@ -1,41 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, NavLink } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import MobileMenu from "./mobileMenu";
 import WishlistModal from "../containers/wishlistModal";
 import { getWishlistItems } from "../../utils/localStorage";
 import logo from "../../public/logo.webp";
 import { FaHeart } from "react-icons/fa";
-import { Listing } from "../../utils/types";
+import { Header, Listing } from "../../utils/types";
 
-export default function Header() {
-    
+interface HeaderProps {
+    headerText: Header;
+};
+
+const Header: React.FC<HeaderProps> = () => {
+
     const [itemBackground, setItemBackground] = useState("none");
     const [horizontalPercentage, setHorizontalPercentage] = useState("0%");
     const [verticalPercentage, setVerticalPercentage] = useState("0%");
     const [wishlistModalOpen, setWishlistModalOpen] = useState(false);
     const [wishlistItems, setWishlistItems] = useState<Listing[]>([]);
     const [scrolled, setScrolled] = useState(false);
-    const navigate = useNavigate();
-    const currentPath = useLocation().pathname;
-
-    const redirect = (option: string) => {
-    
-        const scrollToSection = (option: string) => {
-            const section = document.getElementById(option);
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth", block: "start" });
-            };
-        };
-    
-        if (currentPath !== "/") {
-            navigate("/");
-            setTimeout(() => {
-                scrollToSection(option);
-            }, 1000);
-        } else {
-            scrollToSection(option);
-        };
-    };
 
     const updateItemBackgroundPercentage = (percentage: string) => {
         setItemBackground("flex");
@@ -73,7 +56,7 @@ export default function Header() {
         };
 
     }, []);
-    
+
     return (
         <div id="Header">
             <div id="HeaderContainer" className={ scrolled ? "scrolled" : "" }>
@@ -85,9 +68,15 @@ export default function Header() {
                 </div>
                 <ul id="HeaderListContainer" onMouseLeave={hideItemBackground}>
                     <div id="HeaderListBackground"></div>
-                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("0%")} onClick={() => redirect("Hero")}><p>Home</p></li>
-                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("20%")} onClick={() => redirect("About")}><p>About</p></li>
-                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("40%")} onClick={() => redirect("Contact")}><p>Contact</p></li>
+                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("0%")}>
+                        <a href="/">Home</a>
+                    </li>
+                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("20%")}>
+                        <a href="/about">About</a>
+                    </li>
+                    <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("40%")}>
+                        <a href="/contact">Contact</a>
+                    </li>
                     <li className="HeaderListItem" onMouseEnter={() => updateItemBackgroundPercentage("60%")}>
                         <a href="/listings">Listings</a>
                     </li>
@@ -103,16 +92,17 @@ export default function Header() {
                     />
                 }
             </div>
-
-        <style>
-            {`
-                :root {
-                    --itemBackground: ${itemBackground};
-                    --verticalPercentage: ${verticalPercentage};
-                    --horizontalPercentage: ${horizontalPercentage};
-                }
-            `}
-        </style>
+            <style>
+                {`
+                    :root {
+                        --itemBackground: ${itemBackground};
+                        --verticalPercentage: ${verticalPercentage};
+                        --horizontalPercentage: ${horizontalPercentage};
+                    }
+                `}
+            </style>
         </div>
     );
 };
+
+export default Header;

@@ -14,26 +14,24 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ listing, deleteListing, clo
     const navigate = useNavigate();
 
     return (
-        <>
-            <Card variant="outline" className="flex w-full justify-between" style={{ flexDirection: "row" }}>
-                <div className="h-full">
-                    <Image
-                        src={listing.thumbnail}
-                        alt="Wishlist Listing Thumbnail"
-                        className="h-full"
-                    />
-                </div>
-                <Stack className="w-[60%] h-full border">
-                    <CardBody className="flex flex-col justify-between">
-                        <Heading size="lg">{listing.title}</Heading>
-                        <ButtonGroup className="flex flex-col items-start">
-                            <Button variant="solid" colorScheme="blue" onClick={() => { navigate(`/listing/${listing.id}`); closeWishlistModal(); }}>View Listing</Button>
-                            <Button variant="solid" colorScheme="red" style={{ margin: "10px 0 0 0" }} onClick={deleteListing}>Delete</Button>
-                        </ButtonGroup>
-                    </CardBody>
-                </Stack>
-            </Card>
-        </>
+        <Card variant="outline" className="flex w-full justify-between" style={{ flexDirection: "row" }}>
+            <div className="h-full">
+                <Image
+                    src={listing.thumbnail}
+                    alt="Wishlist Listing Thumbnail"
+                    className="h-full"
+                />
+            </div>
+            <Stack className="w-[60%] h-full border">
+                <CardBody className="flex flex-col justify-between">
+                    <Heading size="lg">{listing.title}</Heading>
+                    <ButtonGroup className="flex flex-col items-start">
+                        <Button variant="solid" colorScheme="blue" onClick={() => { navigate(`/listing/${listing.id}`); closeWishlistModal(); }}>View Listing</Button>
+                        <Button variant="solid" colorScheme="red" style={{ margin: "10px 0 0 0" }} onClick={deleteListing}>Delete</Button>
+                    </ButtonGroup>
+                </CardBody>
+            </Stack>
+        </Card>
     );
 };
 

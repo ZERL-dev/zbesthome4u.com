@@ -6,22 +6,20 @@ import { FaRegHeart } from "react-icons/fa";
 export default function SkeletonCard() {
     
     return (
-        <>
-            <Card className="flex h-full items-start">
-                <CardBody>
-                    <Image
-                        src={skeletonImage}
-                        alt="Image of Listing"
-                        borderRadius="lg"
-                    />
-                    <Stack mt="6" spacing="3">
-                        <SkeletonText />
-                    </Stack>
-                </CardBody>
-                <Button variant="ghost" className="ml-[10px] mb-[10px]">
-                    <FaRegHeart />
-                </Button>
-            </Card>
-        </>
+        <Card className="flex h-full items-start">
+            <CardBody>
+                <Image
+                    src={skeletonImage}
+                    alt="Image of Listing"
+                    borderRadius="lg"
+                />
+                <Stack mt="6" spacing="3">
+                    <SkeletonText />
+                </Stack>
+            </CardBody>
+            <Button variant="ghost" className="ml-[10px] mb-[10px]">
+                <FaRegHeart />
+            </Button>
+        </Card>
     );
 };

@@ -14,15 +14,16 @@ export default function MobileMenu() {
     const navigate = useNavigate();
     const currentPath = useLocation().pathname;
 
-    const redirect = (option: string) => {
-    
-        const scrollToSection = (option: string) => {
-            const section = document.getElementById(option);
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth", block: "start" });
-            };
+    const scrollToSection = (option: string) => {
+        const section = document.getElementById(option);
+
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
         };
-    
+    };
+
+    const redirect = (option: string) => {
+
         if (currentPath !== "/") {
             navigate("/");
             setTimeout(() => {
@@ -34,7 +35,7 @@ export default function MobileMenu() {
             onClose();
         };
     };
-  
+
     return (
         <>
             <Button colorScheme="white" onClick={onOpen}>
