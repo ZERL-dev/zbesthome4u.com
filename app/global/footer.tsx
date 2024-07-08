@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 
 export default function Footer() {
-    
+
     return (
         <div id="Footer">
             <div id="FooterContainer">
@@ -28,71 +28,6 @@ export default function Footer() {
                     <a className="FooterSocialIcon" href="https://mail.google.com/mail/u/0/?fs=1&to= HER EMAIL @gmail.com&su=Draft&tf=cm" target="_blank"><MdOutlineMail /></a>
                 </div>
             </div>
-            <style>
-                {`
-
-                    #Footer {
-                        display: flex;
-                        position: relative;
-                        width: 100vw;
-                        height: 10vh;
-                        overflow-x: hidden;
-                        border-top: 1px solid black;
-                    }
-
-                    #FooterContainer {
-                        display: grid;
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-                        grid-template-columns: 1fr 1fr 1fr 1fr;
-                    }
-
-                    #FooterEmailContainer, #FooterPhoneContainer, #FooterAddressContainer, #FooterSocialIconContainer {
-                        display: flex;
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-                        justify-content: center;
-                        align-items: center;
-                        text-align: center;
-                    }
-
-                    #FooterAddress:hover {
-                        text-decoration: underline;
-                        opacity: 0.9;
-                    }
-
-                    .FooterLink {
-                        display: flex;
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-                        justify-content: center;
-                        align-items: center;
-                    }
-
-                    .FooterSocialIcon {
-                        font-size: 28px;
-                        margin: 0 15px;
-                    }
-
-                    .FooterSocialIcon {
-                        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-                    }
-
-                    .FooterSocialIcon:hover {
-                        opacity: 0.9;
-                        transform: scale(1.1);
-                    }
-
-                    @media (max-width: 600px) {
-                        #Footer { height: 17vh; padding-bottom: 2vh;}
-                        #FooterContainer { grid-template-columns: 1fr 1fr; }
-                    }
-
-                `}
-            </style>
         </div>
     );
 };

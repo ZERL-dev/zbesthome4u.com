@@ -2,13 +2,13 @@ import React from "react";
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
-import Home from "../containers/home";
+import About from "../containers/about";
 import { getLanguage } from "../../utils/localStorage";
 import { textData } from "../../utils/textData";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Home - Elias Realtor" },
+        { title: "About - Elias Realtor" },
         { name: "description", content: "Welcome to Elias Realtor!" }, 
         { name: "viewport", content: "width=device-width, initial-scale=1" }
     ];
@@ -18,16 +18,16 @@ export function loader() {
     return getLanguage();
 };
 
-export default function HomePage() {
+export default function AboutPage() {
 
     const language = useLoaderData<typeof loader>();
     const headerText = textData.header;
-    const homeText = textData.home;
+    const aboutText = textData.about;
 
     return (
         <>
             <Header language={language} text={headerText} />
-            <Home language={language} text={homeText} />
+            <About language={language} text={aboutText} />
         </>
     );
 };

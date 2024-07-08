@@ -5,11 +5,13 @@ import { Listing } from "../../utils/types";
 
 interface AllListingsProps {
     allListings: Listing[];
+    language: string;
+    text: object;
 };
 
 const ListingCard = lazy(() => import("../components/cards/listingCard"));
 
-const AllListings: React.FC<AllListingsProps> = ({ allListings }) => {
+const AllListings: React.FC<AllListingsProps> = ({ allListings, language, text }) => {
     
     return (
         <div id="AllListings">

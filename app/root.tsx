@@ -5,7 +5,9 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@re
 import { MetaFunction, LinksFunction } from "@remix-run/node"; // Depends on the runtime you choose
 import { useLoaderData, json } from "@remix-run/react";
 import { ServerStyleContext, ClientStyleContext } from "./context";
-import tailwind from "./root.css";
+import root from "./css/root.css";
+import tailwind from "./css/tailwind.css";
+import sass from "./css/sass.css";
 
 export async function loader() {
 
@@ -33,7 +35,9 @@ export let links: LinksFunction = () => {
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com" },
         { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" },
-        { rel: "stylesheet", href: tailwind }
+        { rel: "stylesheet", href: root },
+        { rel: "stylesheet", href: tailwind },
+        { rel: "stylesheet", href: sass }
     ];
 };
 

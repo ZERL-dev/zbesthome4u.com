@@ -1,11 +1,19 @@
 import { Listing } from "./types";
 
 export const getLanguage = () => {
-    const languageString = localStorage.getItem("language");
-    return languageString ?
-        languageString === "amharic" ? "amharic" : "english"
-    : 
-        "english";
+
+    if (typeof window !== "undefined") {
+        const language = localStorage.getItem("language");
+
+        if (language) {
+            return language === "amharic" ? "amharic" : "english";
+        } else {
+            return "english";
+        };
+
+    } else {
+        return "english";
+    };
 };
 
 export const getWishlistItems = () => {
@@ -13,7 +21,6 @@ export const getWishlistItems = () => {
     const wishlistString = localStorage.getItem("wishlist");
     const wishlist: Listing[] = wishlistString ? JSON.parse(wishlistString) : []; 
     return wishlist;
-    
 };
 
 export const checkInWishlist = (id: number | undefined) => {
@@ -33,7 +40,6 @@ export const checkInWishlist = (id: number | undefined) => {
             };
 
             return false;
-
         };
     };
 };
@@ -92,5 +98,4 @@ export const deleteFromWishlist = (listing: Listing) => {
     };
 
     return true;
-
 };
