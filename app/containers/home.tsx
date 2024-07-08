@@ -2,7 +2,7 @@ import React from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
-export default function Home() {
+const Home: React.FC<{ language: string; text: object; }> = () => {
 
     return (
         <div id="Home">
@@ -66,3 +66,5 @@ export default function Home() {
         </div>
     );
 };
+
+export default Home;

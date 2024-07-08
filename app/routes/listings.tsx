@@ -5,6 +5,8 @@ import getAllListings from "../../services/GET/getAllListings";
 import Header from "../global/header";
 import AllListings from "../containers/allListings";
 import Footer from "../global/footer";
+import { getLanguage } from "../../utils/localStorage";
+import { textData } from "../../utils/textData";
 import { Listing } from "../../utils/types";
 
 export const meta: MetaFunction = () => {
@@ -16,18 +18,21 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader() {
-    const res: Listing[] = await getAllListings();
-    return res.reverse();
+    const language = getLanguage();
+    const allListings: Listing[] = await getAllListings();
+    return { language: language, allListings: allListings.reverse() };
 };
 
 export default function AllListingsPage() {
 
-    const allListings = useLoaderData<typeof loader>();
-    
+    const loadedData = useLoaderData<typeof loader>();
+    const headerText = textData.header;
+    const listingsText = textData.listings;
+
     return (
         <>
-            <Header />
-            <AllListings allListings={allListings} />
+            <Header language={loadedData.language} text={headerText} />
+            <AllListings allListings={loadedData.allListings} language={loadedData.language} text={listingsText} />
             <Outlet />
             <Footer />
         </>

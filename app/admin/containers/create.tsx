@@ -1,26 +1,24 @@
 import React, { useState } from "react";
-import { Input, Image, Button, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { Input, Image, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import createListing from "../../../services/POST/createListing";
 import cloudinaryUpload from "../../../services/POST/cloudinaryUpload";
-import filters from "../../../utils/filters";
 import { Listing } from "../../../utils/types";
 
 export default function Create() {
     
-    const { categories, categoryObj, sizes, sizeObj, genders, genderObj } = filters;
     const [showWarning, setShowWarning] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     // const [imageURLArray, setImageURLArray] = useState<string[]>([]);
     const [thumbnail, setThumbnail] = useState("");
     const [newListing, setNewListing] = useState<Listing>({
+        id: undefined,
         title: "",
-        price: undefined,
+        price: 0,
+        perks: "",
+        address: "",
         description: "",
-        category: "",
-        size: "",
-        gender: "",
-        measurements: "",
-        notes: "",
+        application_link: "",
+        date: "",
         thumbnail: "",
         gallery: ["temp"]
     });
@@ -40,15 +38,12 @@ export default function Create() {
 
     const validateNewListing = (newListing: Listing) => {
         
-        const listing = {...newListing, thumbnail: thumbnail};
+        const listing = { ...newListing, thumbnail: thumbnail };
 
         if (
             stringPattern.test(listing.title) &&
-            stringPattern.test(listing.description) &&
-            listing.category in categoryObj &&
-            listing.size in sizeObj &&
-            listing.gender in genderObj &&
-            stringPattern.test(listing.measurements) &&
+            stringPattern.test(listing.address) &&
+            stringPattern.test(listing.date) &&
             stringPattern.test(listing.thumbnail) &&
             stringPattern.test(String(listing.price)) &&
             typeof listing.price === "number"
@@ -99,50 +94,6 @@ export default function Create() {
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
                             <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, description: e.target.value})} />
                             <FormLabel>Description</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, category: e.target.value})}> 
-                                <option value="" disabled></option>
-                                {categories.map((category: string, index: number) => {
-                                    const key = Object.keys(categoryObj).find(k => categoryObj[k] === category);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{category}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Category</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, size: e.target.value})}> 
-                                <option value="" disabled></option>
-                                {sizes.map((size: string, index: number) => {
-                                    const key = Object.keys(sizeObj).find(k => sizeObj[k] === size);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{size}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Size</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, gender: e.target.value})}>
-                                <option value="" disabled></option>
-                                {genders.map((gender: string, index: number) => {
-                                    const key = Object.keys(genderObj).find(k => genderObj[k] === gender);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{gender}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Gender</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, measurements: e.target.value})} />
-                            <FormLabel>Measurements</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating">
-                            <Input variant="flushed" placeholder=" " onChange={(e) => setNewListing({...newListing, notes: e.target.value})} />
-                            <FormLabel>Notes</FormLabel>
                         </FormControl>
                     </div>
                     <Button isLoading={submitting} onClick={() => validateNewListing(newListing)}>Create</Button>

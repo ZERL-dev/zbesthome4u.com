@@ -5,13 +5,9 @@ import WishlistModal from "../containers/wishlistModal";
 import { getWishlistItems } from "../../utils/localStorage";
 import logo from "../../public/logo.webp";
 import { FaHeart } from "react-icons/fa";
-import { Header, Listing } from "../../utils/types";
+import { Listing } from "../../utils/types";
 
-interface HeaderProps {
-    headerText: Header;
-};
-
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<{ language: string; text: object; }> = () => {
 
     const [itemBackground, setItemBackground] = useState("none");
     const [horizontalPercentage, setHorizontalPercentage] = useState("0%");

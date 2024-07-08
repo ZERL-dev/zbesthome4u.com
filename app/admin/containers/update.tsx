@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Input, Text, Image, Button, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { Input, Image, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import { NavLink } from "@remix-run/react";
 import updateListingByID from "../../../services/PUT/updateListingByID";
 import cloudinaryUpload from "../../../services/POST/cloudinaryUpload";
 import { IoClose } from "react-icons/io5";
-import filters from "../../../utils/filters";
 import { Listing } from "../../../utils/types";
 
 interface UpdateProps {
@@ -13,7 +12,6 @@ interface UpdateProps {
 
 const Update: React.FC<UpdateProps> = ({ listing }) => {
 
-    const { categories, categoryObj, sizes, sizeObj, genders, genderObj } = filters;
     const [showWarning, setShowWarning] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     // const [imageURLArray, setImageURLArray] = useState<string[]>([]);
@@ -22,12 +20,11 @@ const Update: React.FC<UpdateProps> = ({ listing }) => {
         id: listing.id,
         title: listing.title,
         price: listing.price,
+        perks: listing.perks,
+        address: listing.address,
         description: listing.description,
-        category: listing.category,
-        size: listing.size,
-        gender: listing.gender,
-        measurements: listing.measurements,
-        notes: listing.notes,
+        application_link: listing.application_link,
+        date: listing.date,
         thumbnail: listing.thumbnail,
         gallery: ["temp"]
     });
@@ -51,13 +48,10 @@ const Update: React.FC<UpdateProps> = ({ listing }) => {
 
         if (
             stringPattern.test(listing.title) &&
-            stringPattern.test(listing.description) &&
-            listing.category in categoryObj &&
-            listing.size in sizeObj &&
-            listing.gender in genderObj &&
-            stringPattern.test(listing.measurements) &&
+            stringPattern.test(listing.address) &&
+            stringPattern.test(listing.date) &&
             stringPattern.test(listing.thumbnail) &&
-                stringPattern.test(String(listing.price)) &&
+            stringPattern.test(String(listing.price)) &&
             typeof listing.price === "number"
             // stringPattern.test(listing.gallery)
         ) {
@@ -107,50 +101,6 @@ const Update: React.FC<UpdateProps> = ({ listing }) => {
                         <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
                             <Input variant="flushed" value={updatedListing.description} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, description: e.target.value})} />
                             <FormLabel>Description</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={categoryObj[updatedListing.category]} onChange={(e) => setUpdatedListing({...updatedListing, category: e.target.value})}>
-                                <option value="" disabled></option> 
-                                {categories.map((category: string, index: number) => {
-                                    const key = Object.keys(categoryObj).find(k => categoryObj[k] === category);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{category}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Category</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={sizeObj[updatedListing.size]} onChange={(e) => setUpdatedListing({...updatedListing, size: e.target.value})}>
-                                <option value="" disabled></option>
-                                {sizes.map((size: string, index: number) => {
-                                    const key = Object.keys(sizeObj).find(k => sizeObj[k] === size);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{size}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Size</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Select defaultValue="" variant="flushed" placeholder={genderObj[updatedListing.gender]} onChange={(e) => setUpdatedListing({...updatedListing, gender: e.target.value})}>
-                                <option value="" disabled></option>
-                                {genders.map((gender: string, index: number) => {
-                                    const key = Object.keys(genderObj).find(k => genderObj[k] === gender);
-                                    return (
-                                        <option key={index} value={key} className="text-black border-[#ccc]">{gender}</option>
-                                    )
-                                })}
-                            </Select>
-                            <FormLabel>Gender</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating" isRequired className="h-[60px] mb-[20px]">
-                            <Input variant="flushed" value={updatedListing.measurements} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, measurements: e.target.value})} />
-                            <FormLabel>Measurements</FormLabel>
-                        </FormControl>
-                        <FormControl variant="floating">
-                            <Input variant="flushed" value={updatedListing.notes} placeholder=" " onChange={(e) => setUpdatedListing({...updatedListing, notes: e.target.value})} />
-                            <FormLabel>Notes</FormLabel>
                         </FormControl>
                     </div>
                     <Button isLoading={submitting} onClick={() => validateUpdatedListing(updatedListing)}>Update</Button>

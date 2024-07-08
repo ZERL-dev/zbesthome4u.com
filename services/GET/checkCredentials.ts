@@ -11,7 +11,7 @@ export default async function checkCredentials(username: string, password: strin
         } else {
             return false;
         };
-        
+
     } catch (error) {
         return false;
     };
