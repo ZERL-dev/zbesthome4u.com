@@ -3,7 +3,7 @@ import React from "react";
 const About: React.FC<{ language: string; text: object; }> = () => {
 
     return (
-        <div></div>
+        <div id="About"></div>
     );
 };
 
