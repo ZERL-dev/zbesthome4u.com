@@ -1,11 +1,10 @@
 #Footer {
-
     display: flex;
     position: relative;
     width: 100vw;
-    height: 10vh;
+    height: 100px;
     overflow-x: hidden;
-    border-top: 1px solid black;
+    border: 1px solid black;
 
     #FooterContainer {
         display: grid;
@@ -53,9 +52,6 @@
 
 @media (max-width: 600px) {
     #Footer {
-        height: 17vh;
-        padding-bottom: 2vh;
-
         #FooterContainer {
             grid-template-columns: 1fr 1fr;
         }

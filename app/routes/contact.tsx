@@ -3,6 +3,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
 import Contact from "../containers/contact";
+import Footer from "../global/footer";
 import { getLanguage } from "../../utils/localStorage";
 import { textData } from "../../utils/textData";
 
@@ -28,6 +29,7 @@ export default function ContactPage() {
         <>
             <Header language={language} text={headerText} />
             <Contact language={language} text={contactText} />
+            <Footer />
         </>
     );
 };
