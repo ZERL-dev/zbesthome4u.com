@@ -24,13 +24,15 @@
         "@remix-run/react": "^2.5.1",
         "@remix-run/serve": "^2.5.1",
         "@remix-run/vercel": "^1.19.3",
+        "@vercel/remix": "^2.10.2",
         "axios": "^1.6.5",
         "node-sass": "^9.0.0",
         "onchange": "^7.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^5.0.1",
-        "sass": "^1.77.6"
+        "sass": "^1.77.6",
+        "vite-tsconfig-paths": "^4.3.2"
     },
     "devDependencies": {
         "@remix-run/dev": "^2.5.1",
