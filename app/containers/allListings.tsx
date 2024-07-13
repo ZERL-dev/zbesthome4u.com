@@ -5,7 +5,7 @@ import { Listing } from "../../utils/types";
 
 interface AllListingsProps {
     allListings: Listing[];
-    language: string;
+    language: string | symbol;
     text: object;
 };
 

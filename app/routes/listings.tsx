@@ -1,11 +1,11 @@
 import React from "react";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import getAllListings from "../../services/GET/getAllListings";
 import Header from "../global/header";
 import AllListings from "../containers/allListings";
 import Footer from "../global/footer";
-import { getLanguage } from "../../utils/localStorage";
+import { getLanguage, setLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
 import { Listing } from "../../utils/types";
 
@@ -17,22 +17,30 @@ export const meta: MetaFunction = () => {
     ];
 };
 
-export async function loader() {
-    const language = getLanguage();
-    const allListings: Listing[] = await getAllListings();
-    return { language: language, allListings: allListings.reverse() };
+export async function loader({ request }: LoaderFunctionArgs) {
+    return await getLanguage(request.headers.get("Cookie"));
+};
+
+export async function listingsLoader() {
+    return await getAllListings();
+};
+
+export async function action({ request }: ActionFunctionArgs) {
+    return await setLanguage(request);
 };
 
 export default function AllListingsPage() {
 
-    const loadedData = useLoaderData<typeof loader>();
+    const { language } = useLoaderData<typeof loader>();
+    const allListings = useLoaderData<typeof listingsLoader>();
+    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const listingsText = textData.listings;
 
     return (
         <>
-            <Header language={loadedData.language} text={headerText} />
-            <AllListings allListings={loadedData.allListings} language={loadedData.language} text={listingsText} />
+            <Header language={parsedLanguage} text={headerText} />
+            <AllListings allListings={allListings} language={parsedLanguage} text={listingsText} />
             <Outlet />
             <Footer />
         </>

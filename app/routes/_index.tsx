@@ -1,9 +1,9 @@
 import React from "react";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
 import Home from "../containers/home";
-import { getLanguage } from "../../utils/localStorage";
+import { getLanguage, setLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
 
 export const meta: MetaFunction = () => {
@@ -14,19 +14,25 @@ export const meta: MetaFunction = () => {
     ];
 };
 
-export function loader() {
-    return getLanguage();
+export async function loader({ request }: LoaderFunctionArgs) {
+    return await getLanguage(request.headers.get("Cookie"));
+};
+
+export async function action({ request }: ActionFunctionArgs) {
+    return await setLanguage(request);
 };
 
 export default function HomePage() {
 
-    const language = useLoaderData<typeof loader>();
+    const { language } = useLoaderData<typeof loader>();
+    console.log(language)
+    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const homeText = textData.home;
 
     return (
         <>
-            <Header language={language} text={headerText} />
+            <Header language={parsedLanguage} text={headerText} />
             <Home language={language} text={homeText} />
         </>
     );

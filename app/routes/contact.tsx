@@ -1,10 +1,10 @@
 import React from "react";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
 import Contact from "../containers/contact";
 import Footer from "../global/footer";
-import { getLanguage } from "../../utils/localStorage";
+import { getLanguage, setLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
 
 export const meta: MetaFunction = () => {
@@ -15,19 +15,24 @@ export const meta: MetaFunction = () => {
     ];
 };
 
-export function loader() {
-    return getLanguage();
+export async function loader({ request }: LoaderFunctionArgs) {
+    return await getLanguage(request.headers.get("Cookie"));
+};
+
+export async function action({ request }: ActionFunctionArgs) {
+    return await setLanguage(request);
 };
 
 export default function ContactPage() {
 
-    const language = useLoaderData<typeof loader>();
+    const { language } = useLoaderData<typeof loader>();
+    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const contactText = textData.contact;
 
     return (
         <>
-            <Header language={language} text={headerText} />
+            <Header language={parsedLanguage} text={headerText} />
             <Contact language={language} text={contactText} />
             <Footer />
         </>

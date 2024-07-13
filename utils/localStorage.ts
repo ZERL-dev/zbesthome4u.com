@@ -1,21 +1,5 @@
 import { Listing } from "./types";
 
-export const getLanguage = () => {
-
-    if (typeof window !== "undefined") {
-        const language = localStorage.getItem("language");
-
-        if (language) {
-            return language === "amharic" ? "amharic" : "english";
-        } else {
-            return "english";
-        };
-
-    } else {
-        return "english";
-    };
-};
-
 export const getWishlistItems = () => {
 
     const wishlistString = localStorage.getItem("wishlist");
