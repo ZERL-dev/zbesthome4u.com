@@ -14,8 +14,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ params }: LoaderFunctionArgs) {
-    const res: Listing[] = await getListingByID(String(params.id));
-    return res;
+    return await getListingByID(String(params.id));
 };
 
 export default function ListingByIDPage() {

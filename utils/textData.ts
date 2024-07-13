@@ -1,4 +1,6 @@
-export const textData = {
+import { TextData } from "./types";
+
+export const textData: TextData = {
     header: {
         home: {
             "english": "Home",
@@ -25,7 +27,7 @@ export const textData = {
                 "english": "There are no items in your wishlist",
                 "amharic": ""
             }
-        },
+        }
     },
     home: {
         hero: {
@@ -36,7 +38,7 @@ export const textData = {
             subtitle: {
                 "english": "We Always Work In Your Best Interest When You Buy, Rent, & Sell",
                 "amharic": ""
-            },
+            }
         },
         resources: {
             assistance: {
@@ -144,8 +146,8 @@ export const textData = {
                         }
                     ]
                 }
-            },
-        },
+            }
+        }
     },
     about: {
         title: {
