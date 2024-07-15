@@ -3,7 +3,7 @@ import type { MetaFunction, LoaderFunctionArgs, ActionFunctionArgs } from "@remi
 import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
 import Home from "../containers/home";
-import { getLanguage, setLanguage } from "../../utils/serverCookies";
+import { getLanguage, setLanguage, parseLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
 
 export const meta: MetaFunction = () => {
@@ -25,14 +25,12 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function HomePage() {
 
     const { language } = useLoaderData<typeof loader>();
-    console.log(language)
-    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const homeText = textData.home;
 
     return (
         <>
-            <Header language={parsedLanguage} text={headerText} />
+            <Header language={parseLanguage(language)} text={headerText} />
             <Home language={language} text={homeText} />
         </>
     );

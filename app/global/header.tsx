@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Form, useLocation } from "@remix-run/react";
+import { Button } from "@chakra-ui/react";
 import MobileMenu from "./mobileMenu";
 import WishlistModal from "../containers/wishlistModal";
 import { getWishlistItems } from "../../utils/localStorage";
 import logo from "../../public/logo.webp";
 import { FaHeart } from "react-icons/fa";
 import { HeaderText, Listing } from "../../utils/types";
-import { Button } from "@chakra-ui/react";
 
 const Header: React.FC<{ language: string | symbol; text: HeaderText; }> = ({ language, text }) => {
 
@@ -60,9 +60,9 @@ const Header: React.FC<{ language: string | symbol; text: HeaderText; }> = ({ la
             <div id="HeaderContainer" className={ scrolled ? "scrolled" : "" }>
                 <div id="HeaderLogoContainer">
                     <NavLink to="/"><img id="HeaderLogo" src={logo} alt="Elias Realtor Logo" /></NavLink>
-                    <Form action="POST">
+                    <Form method="POST">
                         <input type="hidden" name="route" value={ useLocation().pathname } />
-                        <input type="hidden" name="language" value={ oppositeLanguage === "english" ? "false" : "true" } />
+                        <input type="hidden" name="language" value={oppositeLanguage} />
                         <Button type="submit" colorScheme="blue" className="ml-2">{oppositeLanguage}</Button>
                     </Form>
                 </div>

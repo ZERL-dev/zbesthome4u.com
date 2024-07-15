@@ -5,9 +5,8 @@ import getAllListings from "../../services/GET/getAllListings";
 import Header from "../global/header";
 import AllListings from "../containers/allListings";
 import Footer from "../global/footer";
-import { getLanguage, setLanguage } from "../../utils/serverCookies";
+import { getLanguage, setLanguage, parseLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
-import { Listing } from "../../utils/types";
 
 export const meta: MetaFunction = () => {
     return [
@@ -33,14 +32,13 @@ export default function AllListingsPage() {
 
     const { language } = useLoaderData<typeof loader>();
     const allListings = useLoaderData<typeof listingsLoader>();
-    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const listingsText = textData.listings;
 
     return (
         <>
-            <Header language={parsedLanguage} text={headerText} />
-            <AllListings allListings={allListings} language={parsedLanguage} text={listingsText} />
+            <Header language={parseLanguage(language)} text={headerText} />
+            <AllListings allListings={allListings} language={parseLanguage(language)} text={listingsText} />
             <Outlet />
             <Footer />
         </>
