@@ -3,7 +3,6 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import getListingByID from "../../services/GET/getListingByID";
 import ListingByID from "../containers/listingByID";
-import { Listing } from "utils/types";
 
 export const meta: MetaFunction = () => {
     return [

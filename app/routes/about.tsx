@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import Header from "../global/header";
 import About from "../containers/about";
 import Footer from "../global/footer";
-import { getLanguage, setLanguage } from "../../utils/serverCookies";
+import { getLanguage, setLanguage, parseLanguage } from "../../utils/serverCookies";
 import { textData } from "../../utils/textData";
 
 export const meta: MetaFunction = () => {
@@ -26,13 +26,12 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function AboutPage() {
 
     const { language } = useLoaderData<typeof loader>();
-    const parsedLanguage = language.includes("amharic") ? Symbol("amharic") : "english";
     const headerText = textData.header;
     const aboutText = textData.about;
 
     return (
         <>
-            <Header language={parsedLanguage} text={headerText} />
+            <Header language={parseLanguage(language)} text={headerText} />
             <About language={language} text={aboutText} />
             <Footer />
         </>
